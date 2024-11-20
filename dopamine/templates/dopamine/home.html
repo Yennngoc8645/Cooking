@@ -26,28 +26,38 @@
 {% block main-content %}
 <div class="row">
   <div class="col-lg-3">
-    <div class="thumbnail product-container">
-      <img class="img-fluid product-img"src="{% static 'dopamine/images/Broccoli.png' %}" alt="Sản phẩm">
-    </div>
-    <div class="box-element product mt-2">
-      <h5><strong>Bông cải</strong> <span class="price"> 20.000đ</span></h5>
-      <hr>
-<div class="row">
-  <div class="col-lg-3">
-    <div class="thumbnail product-container">
-      <img class="img-fluid product-img"src="{% static 'dopamine/images/CaiThao.png' %}" alt="Sản phẩm">      
-    </div>
-    <div class="box-element product mt-2">
-      <h5><strong>Cải Thảo</strong> <span class="price"> 15.000đ</span></h5>
-      <hr>
-      <div class="buttons-container">
-        <button class="btn btn-outline-secondary add-btn">Thêm vào giỏ hàng</button>
-        <a class="btn btn-outline-success view-btn" href="#">Xem chi tiết</a>
+    <div class="box-element">
+      <div class="product-image">
+        <img class="thumbnail" src="{% static 'dopamine/images/Broccoli.png' %}" alt="Sản phẩm">
+        <div class="button-container">
+          <a href="#"><img src="{% static 'dopamine/images/cart.png' %}" alt="Giỏ hàng"></a>
+          <a href="#"><img src="{% static 'dopamine/images/view.png' %}" alt="Xem chi tiết"></a>
+        </div>
       </div>
-    </div>
+      <div class="product-details">
+        <h5 class="product-name">Bông Cải</h5>
+        <h5 class="product-price">55,000₫</h5>
+      </div>
+    </div>    
   </div>
-</div>
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="box-element">
+        <div class="product-image">
+          <img class="thumbnail" src="{% static 'dopamine/images/Broccoli.png' %}" alt="Sản phẩm">
+          <div class="button-container">
+            <a href="#"><img src="{% static 'dopamine/images/cart.png' %}" alt="Giỏ hàng"></a>
+            <a href="#"><img src="{% static 'dopamine/images/view.png' %}" alt="Xem chi tiết"></a>
+          </div>
+        </div>
+        <div class="product-details">
+          <h5 class="product-name">Bông Cải</h5>
+          <h5 class="product-price">55,000₫</h5>
+        </div>
+      </div>    
+    </div>
 {% endblock main-content %}
+
 
 <!--<div class="container text-center mt-4">
     <div class="row">
