@@ -107,7 +107,7 @@ h1,h2,h3,h4,h5,h6{
 /* Đặt kích thước và shadow cho .thumbnail Khung ảnh*/
 /* Thêm viền màu cho khung ảnh */
 .thumbnail {
-    width: 260px;  /* Chiều rộng của khung */
+    /* width: 260px;  Chiều rộng của khung */
     height: 150px; /* Chiều cao của khung */
     position: relative;
     padding: 10px;

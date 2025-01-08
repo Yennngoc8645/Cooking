@@ -1,36 +1,59 @@
-
-# Create your models here.
 from django.db import models
+from django.contrib.auth.models import User
 
-class User(models.Model):
-    username = models.CharField(max_length=255)
-    diachi = models.CharField(max_length=255)
-    sdt = models.IntegerField()
-    email = models.CharField(max_length=255)
+class Customer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
+    name = models.CharField(max_length=200, null=True)
+    email = models.CharField(max_length=200, null=True)
 
-class Monan(models.Model):
-    ten_monan = models.CharField(max_length=255)
-    nguyenlieu_monan = models.CharField(max_length=255)
-    hinhanh = models.ImageField(upload_to='images/')
+    def __str__(self):
+        return self.name
 
-class Congthuc(models.Model):
-    tenmon = models.CharField(max_length=255)
-    hinhanh = models.ImageField(upload_to='images/')
-    ngaythem = models.DateTimeField()
-    nguyenlieu = models.CharField(max_length=255)
-    huongdan = models.TextField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+class Product(models.Model):
+    name = models.CharField(max_length=200, null=True)  # Tên sản phẩm (ví dụ: Rau cải, Cà rốt)
+    price = models.DecimalField(max_digits=10, decimal_places=3)  # Giá sản phẩm
+    category = models.CharField(
+        max_length=50,
+        choices=[('RAU', 'Rau'), ('CU', 'Củ'), ('QUA', 'Quả')],
+        default='RAU'
+    )  # Phân loại sản phẩm
+    image = models.ImageField(upload_to='images/',null=True,blank=True)
+    quantity = models.IntegerField(default=0)  # Số lượng trong kho
+    unit = models.CharField(max_length=50, default='kg')  # Đơn vị tính (ví dụ: kg, quả, bó)
+    description = models.TextField(null=True, blank=True)  # Mô tả sản phẩm
 
-class Phanloai(models.Model):
-    monman = models.CharField(max_length=255)
-    monchay = models.CharField(max_length=255)
-    thucuong = models.CharField(max_length=255)
-    trangmieng = models.CharField(max_length=255)
-    nuoccham = models.CharField(max_length=255)
-    monan = models.ForeignKey(Monan, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name
+    @property
+    def ImageProduct(self):
+        try:
+            url = self.image.url
+        except:
+            url = ''
+        return url
 
-from.models import Monan
 
-monans = Monan.objects.all()
-for monan in monans:
-    print(monan.ten_monan)
+class Order(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True, related_name="orders")
+    date_order = models.DateTimeField(auto_now_add=True)
+    complete = models.BooleanField(default=False)
+    transaction_id = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+        return str(self.id)
+
+class OrderItem(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, blank=True, null=True, related_name="order_items")
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True, related_name="items")
+    quantity = models.IntegerField(default=0, blank=True, null=True)
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.product.name} x {self.quantity}"
+
+class ShippingAddress(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True, related_name="addresses")
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True, related_name="shipping_addresses")
+    address = models.CharField(max_length=200, null=True)
+    city = models.CharField(max_length=200, null=True)
+    state = models.CharField(max_length=10, null=True)

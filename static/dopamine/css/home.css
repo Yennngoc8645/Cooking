@@ -1,15 +1,18 @@
 body {
 	background-color: hsl(0, 0%, 98%);
+	/* overflow: hidden; */
 }
 
 h1, h2, h3, h4, h5, h6 {
 	color: hsl(0, 0%, 30%);
 }
+
 .box-element {
-	border: 1px solid #e2e2e2; /* Đường viền mỏng quanh sản phẩm */
+	border: 2px solid #e2e2e2; /* Đường viền mỏng quanh sản phẩm */
 	border-radius: 4px;
 	padding: 8px; /* Tạo khoảng cách giữa ảnh và viền nền trắng */
 	max-width: 250px; /* Điều chỉnh kích thước phù hợp */
+	height: 220px;
 	background-color: #fff; /* Màu nền trắng */
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
 	transition: box-shadow 0.3s ease;
@@ -24,14 +27,14 @@ h1, h2, h3, h4, h5, h6 {
 .thumbnail {
 	width: 100%;
 	height: auto;
-	object-fit: contain;
+	object-fit: initial;
 	border-radius: 4px;
 }
 
 .product-image {
     width: 100%; /* Chiều rộng khung ảnh */
-    height: 150px; /* Chiều cao khung ảnh, điều chỉnh theo nhu cầu */
     display: flex;
+	/* margin-left: 10px; */
     align-items: center;  /*Căn giữa theo chiều dọc */
     justify-content: center; /* Căn giữa theo chiều ngang */
     overflow: hidden; /* Ẩn phần ảnh vượt quá khung */

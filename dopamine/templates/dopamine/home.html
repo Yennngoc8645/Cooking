@@ -1,6 +1,9 @@
 {% extends "dopamine/base.html" %}
 {% load static %}
 {% block banner_slider %}
+<link href="{% static 'dopamine/css/home.css' %}" rel="stylesheet"/>
+
+
 <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
   <div class="carousel-inner">
     <div class="carousel-item active">
@@ -24,114 +27,25 @@
 </div>
 {% endblock banner_slider %}
 {% block main-content %}
-<div class="row">
-  <div class="col-lg-3">
+<div class="row" style="width:100">
+  {% for product in products %}
+  <div class="col-lg-2">
     <div class="box-element">
       <div class="product-image">
-        <img class="thumbnail" src="{% static 'dopamine/images/Bông cải.png' %}" alt="Sản phẩm">
+        <img class="thumbnail" src="{{ product.ImageProduct }}" alt="Sản phẩm">
         <div class="button-container">
           <a href="#"><img src="{% static 'dopamine/images/cart.png' %}" alt="Giỏ hàng"></a>
           <a href="#"><img src="{% static 'dopamine/images/view.png' %}" alt="Xem chi tiết"></a>
         </div>
       </div>
       <div class="product-details">
-        <h5 class="product-name">Bông Cải</h5>
-        <h5 class="product-price">55,000₫</h5>
+        <h5 class="product-name">{{product.name}}</h5>
+        <h5 class="product-price">{{product.price|floatformat:3}}đ</h5>
       </div>
-    </div>    
+    </div>
+  </div>  
+    {% endfor %}  
   </div>
- 
-    <div class="col-lg-3">
-      <div class="box-element">
-        <div class="product-image">
-          <img class="thumbnail" src="{% static 'dopamine/images/Caithao.png' %}" alt="Sản phẩm">
-          <div class="button-container">
-            <a href="#"><img src="{% static 'dopamine/images/cart.png' %}" alt="Giỏ hàng"></a>
-            <a href="#"><img src="{% static 'dopamine/images/view.png' %}" alt="Xem chi tiết"></a>
-          </div>
-        </div>
-        <div class="product-details">
-          <h5 class="product-name">Cải thảo</h5>
-          <h5 class="product-price">15,000₫</h5>
-        </div>
-      </div>    
 {% endblock main-content %}
 
-
-<!--<div class="container text-center mt-4">
-    <div class="row">
-        <div class="col-4 col-md-2 mb-4">
-            <div class="category-item">
-                <img src="{% static 'dopamine/images/icons/omelette.png' %}" alt="Ăn sáng" class="category-icon">
-                <p>Ăn sáng</p>
-            </div>
-        </div>
-        <div class="col-4 col-md-2 mb-4">
-            <div class="category-item">
-                <img src="{% static 'dopamine/images/icons/cake.png' %}" alt="Ăn vặt" class="category-icon">
-                <p>Ăn vặt</p>
-            </div>
-        </div>
-        <div class="col-4 col-md-2 mb-4">
-            <div class="category-item">
-                <img src="{% static 'dopamine/images/icons/appetizer.png' %}" alt="Khai vị" class="category-icon">
-                <p>Khai vị</p>
-            </div>
-        </div>
-        <div class="col-4 col-md-2 mb-4">
-            <div class="category-item">
-                <img src="{% static 'dopamine/images/icons/teapot.png' %}" alt="Thức uống" class="category-icon">
-                <p>Thức uống</p>
-            </div>
-        </div>
-        <div class="col-4 col-md-2 mb-4">
-            <div class="category-item">
-              <img src="{% static 'dopamine/images/icons/salad.png' %}" alt="Salad" class="category-icon">
-              <p>Salad</p>
-            </div>
-        </div>
-        <div class="col-4 col-md-2 mb-4">
-            <div class="category-item">
-                <img src="{% static 'dopamine/images/icons/ketchup.png' %}" alt="Nước chấm" class="category-icon">
-                <p>Nước chấm</p>
-            </div>
-        </div>
-    </div>
-</div>-->
-
-<!--{% block recipe-content %}
-<div class="row mt-5">
-  <h3 class="text-center mb-4">Danh mục Công thức Nấu ăn</h3>
-  <div class="col-lg-4">
-    <div class="card">
-      <img src="{% static 'dopamine/images/recipe1.jpg' %}" class="card-img-top" alt="Recipe Image">
-      <div class="card-body">
-        <h5 class="card-title">Salad Cải Thảo</h5>
-        <p class="card-text">Một món ăn nhẹ nhàng và giàu dinh dưỡng với cải thảo và các loại rau tươi khác.</p>
-        <a href="#" class="btn btn-primary">Xem công thức</a>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-4">
-    <div class="card">
-      <img src="{% static 'dopamine/images/recipe2.jpg' %}" class="card-img-top" alt="Recipe Image">
-      <div class="card-body">
-        <h5 class="card-title">Súp Cải Thảo</h5>
-        <p class="card-text">Một bát súp ấm áp và bổ dưỡng với cải thảo, thịt và gia vị thơm ngon.</p>
-        <a href="#" class="btn btn-primary">Xem công thức</a>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-4">
-    <div class="card">
-      <img src="{% static 'dopamine/images/recipe3.jpg' %}" class="card-img-top" alt="Recipe Image">
-      <div class="card-body">
-        <h5 class="card-title">Cải Thảo Xào Tỏi</h5>
-        <p class="card-text">Một món ăn đơn giản và dễ làm với cải thảo xào cùng tỏi và dầu hào.</p>
-        <a href="#" class="btn btn-primary">Xem công thức</a>
-      </div>
-    </div>
-  </div>
-</div>
-{% endblock recipe-content %}-->
 
