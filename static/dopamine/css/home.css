@@ -1,0 +1,105 @@
+body {
+	background-color: hsl(0, 0%, 98%);
+	/* overflow: hidden; */
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: hsl(0, 0%, 30%);
+}
+
+.box-element {
+	border: 2px solid #e2e2e2; /* Đường viền mỏng quanh sản phẩm */
+	border-radius: 4px;
+	padding: 8px; /* Tạo khoảng cách giữa ảnh và viền nền trắng */
+	max-width: 250px; /* Điều chỉnh kích thước phù hợp */
+	height: 220px;
+	background-color: #fff; /* Màu nền trắng */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+	transition: box-shadow 0.3s ease;
+	position: relative; /* Để định vị các nút bên trong */
+	text-align: center; /* Căn giữa nội dung bên trong */
+}
+
+.box-element:hover {
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Hiệu ứng đổ bóng khi hover */
+}
+
+.thumbnail {
+	width: 100%;
+	height: auto;
+	object-fit: initial;
+	border-radius: 4px;
+}
+
+.product-image {
+    width: 100%; /* Chiều rộng khung ảnh */
+    display: flex;
+	/* margin-left: 10px; */
+    align-items: center;  /*Căn giữa theo chiều dọc */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    overflow: hidden; /* Ẩn phần ảnh vượt quá khung */
+    background-color: #fff; /* Đảm bảo nền trắng */
+	position: relative;
+}
+  
+.button-container {
+	position: absolute;
+	bottom: 10%; /* Đưa nút xuống gần đáy */
+	left: 50%;
+	transform: translateX(-50%) scale(0); /* Ban đầu ẩn nút (thu nhỏ) */
+	display: flex;
+	gap: 10px;
+	transition: transform 0.3s ease-in-out; /* Hiệu ứng chuyển động */
+}
+
+.product-image:hover .button-container {
+	transform: translateX(-50%) scale(1); /* Hiển thị nút khi hover */
+}
+
+.button-container a {
+	display: inline-block;
+	align-items: center;
+	justify-content: center; /* Căn giữa icon theo chiều ngang */
+	background-color: #ffffff; /* Màu nền cho khung nút */
+	border-radius: 50%; /* Bo tròn nút */
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Đổ bóng nhẹ */
+	width: 40px;
+	height: 40px;
+	transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.button-container a:hover {
+	background-color: #ddd; /* Đổi màu khi hover */
+	transform: scale(1.2); /* Phóng to khi hover */
+}
+
+.button-container img {
+	display: block;
+	margin: auto;
+	width: 20px; /* Đảm bảo kích thước icon phù hợp */
+	height: auto;
+}
+
+.button-container a img {
+	padding-top: 5px;
+    width: 60%; /* Đảm bảo icon nhỏ hơn khung tròn */
+    height: auto; /* Giữ đúng tỷ lệ */
+}
+
+.product-details {
+	text-align: center;
+}
+
+.product-name {
+	font-size: 16px;
+	color: #4f8c4b; /* Màu xanh nhẹ */
+	margin-bottom: 10px;
+}
+
+.product-price {
+	font-size: 16px;
+	color: red; /* Màu đỏ cho giá */
+	font-weight: bold;
+	margin: 5px 0;
+}
+
