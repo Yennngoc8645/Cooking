@@ -1,0 +1,105 @@
+body {
+    background-color: hsl(0, 0%, 98%);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: hsl(0, 0%, 30%);
+}
+
+.product-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    justify-items: center;
+}
+
+.box-element {
+    border: 2px solid #e2e2e2;
+    border-radius: 4px;
+    padding: 8px;
+    max-width: 250px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.box-element:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.product-image {
+    width: 100%;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #fff;
+    position: relative;
+}
+
+.thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.button-container {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    display: flex;
+    gap: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.product-image:hover .button-container {
+    transform: translateX(-50%) scale(1);
+}
+
+.button-container a {
+    display: inline-block;
+    background-color: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.button-container a:hover {
+    background-color: #ddd;
+    transform: scale(1.2);
+}
+
+.button-container a img {
+    padding-top: 5px;
+    width: 60%;
+    height: auto;
+}
+
+.product-details {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.product-name {
+    font-size: 16px;
+    color: #4f8c4b;
+    margin-bottom: 5px;
+}
+
+.product-price {
+    font-size: 16px;
+    color: red;
+    font-weight: bold;
+    margin: 0;
+}
