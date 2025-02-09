@@ -27,14 +27,16 @@
 </div>
 {% endblock banner_slider %}
 {% block main-content %}
-<div class="row" style="width:100">
+<div class="row" style="width:100%">
   {% for product in products %}
   <div class="col-lg-2">
     <div class="box-element">
       <div class="product-image">
-        <img class="thumbnail" src="{{ product.ImageProduct }}" alt="Sản phẩm">
+        <img class="thumbnail" src="{{ product.ImageProduct }}" alt="{{ product.name }}">
         <div class="button-container">
-          <a href="#"><img src="{% static 'dopamine/images/cart.png' %}" alt="Giỏ hàng"></a>
+          <a href="#" data-product="{{ product.id }}" data-action="add" class="add-to-cart">
+            <img src="{% static 'dopamine/images/cart.png' %}" alt="Thêm vào giỏ hàng">
+          </a>          
           <a href="#"><img src="{% static 'dopamine/images/view.png' %}" alt="Xem chi tiết"></a>
         </div>
       </div>

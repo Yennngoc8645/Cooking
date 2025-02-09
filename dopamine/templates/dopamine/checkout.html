@@ -2,7 +2,7 @@
 {% load static %}
 {% block content_checkout %}
 <link href="{% static 'dopamine/css/checkout.css' %}" rel="stylesheet"/> 
-     <div class="row">
+     <div class="row" style='width:100%'>
 		<div class="col-lg-6">
 			<div class="box-element" id="form-wrapper">
 				<form id="form">
@@ -54,24 +54,16 @@
 				<hr>
 				<h3>Order Summary</h3>
 				<hr>
+				{%for item in items%}
 				<div class="cart-row">
-					<div style="flex:2"><img class="row-image" src="{% static 'dopamine/images/Caithao.png' %}"></div>
-					<div style="flex:2"><p>Product 1</p></div>
-					<div style="flex:1"><p>$20.00</p></div>
-					<div style="flex:1"><p>x2</p></div>
+					<div style="flex:2"><img class="row-image" src="{{item.product.ImageProduct}}"></div>
+					<div style="flex:2"><p>{{item.product.name}}</p></div>
+					<div style="flex:1"><p>{{item.product.price}}</p></div>
+					<div style="flex:1"><p>{{item.quantity}}</p></div>
 				</div>
-				<h5>Items:   2</h5>
-				<h5>Total:   $4</h5>
-
-                <div class="cart-row">
-					<div style="flex:2"><img class="row-image" src="{% static 'dopamine/images/rau muống.jpg' %}"></div>
-					<div style="flex:2"><p>Product 1</p></div>
-					<div style="flex:1"><p>$20.00</p></div>
-					<div style="flex:1"><p>x2</p></div>
-				</div>
-				<h5>Items:   2</h5>
-				<h5>Total:   $4</h5>
-			</div>
+				{%endfor%}
+				<h5>Items: {{order.get_cart_items}}</h5>
+				<h5>Total: {{order.get_cart_total}}</h5>
 		</div>
 	</div>
 {% endblock content_checkout %}
