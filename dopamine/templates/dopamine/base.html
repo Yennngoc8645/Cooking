@@ -18,7 +18,29 @@
         <script src="{% static 'dopamine/js/s3.js' %}" ></script>
         <script src="{% static 'dopamine/js/all.min.js' %}" ></script>
         <script src="{% static 'dopamine/js/myscript.js' %}" ></script>
-
+        <script type="text/javascript">
+          var user = '{{ request.user }}';
+          function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    
+        // Lấy CSRF token từ cookie
+        const csrftoken = getCookie('csrftoken');
+        console.log('CSRF Token:', csrftoken);
+      </script>
+      
+        
         <title>DoFood-Công thức và Thực phẩm</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -94,13 +116,11 @@
                   </li>
                   <li class="nav-item pt-3">
                     <a class="nav-link" href="#">Đăng ký</a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="{% url 'cart' %}">
-                      <img src="{% static 'dopamine/images/giỏ hàng.png' %}" width="70" height="70"/>
-                    </a>
-                  </li>
+                  </li>                 
                 </ul>
+                <div class="form-inline my-2 my-lg-0">
+                  <a href="{% url 'cart' %}"><img id="cart-icon" src="{% static 'dopamine/images/cart.png'%}"></a>
+                  <p id='cart-total' >{{cartItems}}</p>
               </div>
             </div>
         </nav>
@@ -113,7 +133,6 @@
 
         <!-- Footer -->
         <footer></footer>
-        <script src="{% static 'dopamine/js/cart.js' %}" ></script>
-
+        <script src="{% static 'dopamine/js/cart.js' %}"></script>
     </body>
 </html>
