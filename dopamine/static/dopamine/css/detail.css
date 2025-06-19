@@ -1,0 +1,14 @@
+.container .add-to-cart {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.container .add-to-cart:hover {
+    background-color: #218838;
+}

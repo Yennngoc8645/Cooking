@@ -19,7 +19,7 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 4px;
     padding: 8px;
     max-width: 250px;
-    background-color: #fff;
+    background-color: #c0ffc4;;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease;
     position: relative;
@@ -103,3 +103,10 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
     margin: 0;
 }
+
+.custom-carousel-img {
+    height: auto !important; /* Bắt buộc thay đổi chiều cao */
+    object-fit: cover; /* Đảm bảo hình ảnh vừa khít khung */
+}
+
+

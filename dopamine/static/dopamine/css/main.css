@@ -109,6 +109,7 @@ h1,h2,h3,h4,h5,h6{
 .thumbnail {
     /* width: 260px;  Chiều rộng của khung */
     height: 150px; /* Chiều cao của khung */
+    width: 197px;
     position: relative;
     padding: 10px;
     border: 1px solid #4f868c; /* Viền 2px, màu xanh lam nhạt */
@@ -126,7 +127,7 @@ h1,h2,h3,h4,h5,h6{
 	background-color: #4f868c!important;
 }
 
-#cart-icon{
+/* #cart-icon{
 	width:25px;
 	display: inline-block;
 	margin-left: 15px;
@@ -141,6 +142,31 @@ h1,h2,h3,h4,h5,h6{
 	height: 25px;
 	border-radius: 50%;
 	font-size: 14px;
+} */
+.add-to-cart {
+  position: relative;
+  display: inline-block;
+}
+
+.cart-icon {
+  width: 40px; /* Điều chỉnh kích thước ảnh */
+  height: auto;
+}
+
+.cart-total {
+  position: absolute;
+  top: -5px; /* Điều chỉnh vị trí dọc */
+  right: -5px; /* Điều chỉnh vị trí ngang */
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  padding: 2px 6px;
+  text-align: center;
+  min-width: 20px; /* Đảm bảo hình tròn cho số lớn */
+  line-height: 20px;
+  display: inline-block;
 }
 
 .col-lg-3, .col-lg-4, .col-lg-6, .col-lg-8, .col-lg-12{
@@ -186,3 +212,20 @@ h1,h2,h3,h4,h5,h6{
 	transition:.1s;
 }
 
+p#cart-total {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    /* background-color: red; */
+    color: #f20f0f;
+    font-size: 17px;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 2px 7px;
+    text-align: center;
+    min-width: 20px;
+    line-height: 20px;
+    display: inline-block;
+    margin-right: 5px;
+    margin-top: 7px;
+}

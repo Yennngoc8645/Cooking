@@ -1,0 +1,16 @@
+/* Hình ảnh sản phẩm */
+.product-image {
+  width: 100%; /* Chiều rộng khung ảnh bằng toàn bộ container */
+  height: 200px; /* Đặt chiều cao cố định cho khung ảnh */
+  overflow: hidden; /* Ẩn phần ảnh vượt ra ngoài khung */
+  display: flex; /* Dùng Flexbox để căn giữa */
+  justify-content: center;
+  align-items: center;
+}
+
+.product-image img {
+  width: 100%; /* Ảnh co dãn theo chiều rộng khung */
+  height: 100%; /* Ảnh co dãn theo chiều cao khung */
+  object-fit: cover; /* Cắt ảnh theo khung, giữ tỷ lệ ảnh */
+  border-radius: 5px; /* Bo góc nhẹ */
+}

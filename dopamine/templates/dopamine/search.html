@@ -1,0 +1,38 @@
+{% extends "dopamine/base.html" %}
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        {% block register %}
+        <h5> Result search for {{searched}} </h5> <br />
+        <div class="row" style="width:100%">
+          {% for product in keys %}
+          <div class="col-lg-2">
+            <div class="box-element">
+              <div class="product-image">
+                <img class="thumbnail" src="{{ product.ImageProduct }}" alt="{{ product.name }}">
+                <div class="button-container">
+                  <a href="#" data-product="{{ product.id }}" data-action="add" class="add-to-cart">
+                    <img src="{% static 'dopamine/images/cart.png' %}" alt="Thêm vào giỏ hàng">
+                  </a>          
+                  <a href="#"><img src="{% static 'dopamine/images/view.png' %}" alt="Xem chi tiết"></a>
+                </div>
+              </div>
+              <div class="product-details">
+                <h5 class="product-name">{{product.name}}</h5>
+                <h5 class="product-price">{{product.price|floatformat:3}}đ</h5>
+              </div>
+            </div>
+          </div>  
+            {% endfor %}  
+          </div>
+        {% endblock register %}
+    </body>
+</html>

@@ -1,0 +1,62 @@
+{% extends "dopamine/base.html" %}
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% comment %} <link rel="stylesheet" href="{% static 'dopamine/css/detail.css' %}"> {% endcomment %}
+        {% block extra_css %}
+        <link rel="stylesheet" href="{% static 'dopamine/css/detail.css' %}">
+        {% endblock %} 
+    </head>
+    <body>
+      {% block register %}
+      {% for product in products %}
+      <div class="container mt-5 mb-5">
+      <div class="row d-flex justify-content-center">
+          <div class="col-md-10">
+              <div class="card">
+                  <div class="row">
+                      <div class="col-md-6">
+                          <div class="images p-3">
+                              <div class="text-center p-4"> <img id="main-image" src="{{product.ImageProduct}}" width="250" /> </div>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="product p-4">
+                              {% comment %} <div class="d-flex justify-content-between align-items-center">
+                                  <div class="d-flex align-items-center"> <i class="fa fa-long-arrow-left"></i> <span class="ml-1">Back</span> </div> <i class="fa fa-shopping-cart text-muted"></i>
+                              </div> {% endcomment %}
+                              <div class="mt-4 mb-3"> <span class="text-uppercase text-muted brand">Orianz</span>
+                                  <h5 class="text-uppercase">{{product.name}}</h5>
+                                  <div class="price d-flex flex-row align-items-center"> <span class="act-price">$ {{product.price}}</span>
+                                  </div>
+                              </div>
+                              <p class="about">{{product.detail}}</p>
+                              <div class="cart mt-4 align-items-center"> 
+                              {% comment %} <button class="btn btn-danger text-uppercase mr-2 px-4">Add to cart</button>  {% endcomment %}
+                              {% comment %} <a href="#" data-product="{{ product.id }}" data-action="add" class="add-to-cart">
+                               <img src="{% static 'dopamine/images/cart.png' %}" alt="Thêm vào giỏ hàng">
+                              </a>       {% endcomment %}
+                              {% comment %} <button data-product="{{ product.id }}" data-action="add" href="{% url 'dopamine/cart.html' product.id %}" class="add-to-cart">
+                                Thêm vào giỏ hàng
+                              </button> {% endcomment %}
+                              <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary add-to-cart">
+                                Thêm vào giỏ hàng
+                            </a>
+
+                             <i class="fa fa-heart text-muted"></i> <i class="fa fa-share-alt text-muted"></i> </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  {%endfor%}
+        {% endblock register %}
+    </body>
+</html>
