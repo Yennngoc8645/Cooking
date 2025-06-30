@@ -1,8 +1,37 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from PIL import Image
 #change forms register django
 #category
+#Congthuc
+class Recipe(models.Model):
+    # Các lựa chọn phân loại công thức
+    TYPE_CHOICES = [
+        ('vegetarian', 'Món chay'),
+        ('meat', 'Món mặn'),
+        ('dessert', 'Món tráng miệng'),
+    ]
+    
+    name = models.CharField(max_length=200)  # Tên món ăn
+    description = models.TextField(null=True, blank=True)  # Mô tả món ăn
+    ingredients = models.TextField()  # Nguyên liệu
+    steps = models.TextField()  # Các bước thực hiện
+    image = models.ImageField(upload_to='recipes/', null=True, blank=True)  # Hình ảnh món ăn
+    type = models.CharField(max_length=50, choices=TYPE_CHOICES, default='meat')  # Loại món ăn
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.image:
+            img = Image.open(self.image.path)
+            # Resize ảnh nếu kích thước quá lớn
+            if img.width > 300 or img.height > 300:
+                output_size = (300, 300)
+                img.thumbnail(output_size)
+                img.save(self.image.path)
+
+    def __str__(self):
+        return self.name
 class Category(models.Model):
     sub_category = models.ForeignKey('self', on_delete=models.CASCADE, related_name='sub_categories', null=True,blank=True)
     is_sub =  models.BooleanField(default=False)

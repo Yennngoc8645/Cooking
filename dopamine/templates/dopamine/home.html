@@ -34,10 +34,10 @@
         <img class="thumbnail" src="{{ product.ImageProduct }}" alt="{{ product.name }}">
          <div class="button-container">
           <a href="#" data-product="{{ product.id }}" data-action="add" class="add-to-cart">
-            <img src="{% static 'dopamine/images/cart.png' %}" alt="Thêm vào giỏ hàng">
+            <img src="{% static 'dopamine/images/shoppingcart.png' %}" alt="Thêm vào giỏ hàng">
           </a>     
 
-          <a href="{% url 'detail' %}?id={{product.id}}"><img src="{% static 'dopamine/images/view.png' %}" alt="Xem chi tiết"></a>
+          <a href="{% url 'detail' %}?id={{product.id}}"><img src="{% static 'dopamine/images/search.png' %}" alt="Xem chi tiết"></a>
         </div>
       </div>
       <div class="product-details">

@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 
 from django.shortcuts import redirect, get_object_or_404
-from .models import Product, Order, OrderItem
+from .models import Product, Order, OrderItem, Recipe
 
 # Create your views here.
 def detail(request):
@@ -31,10 +31,13 @@ def detail(request):
     return render(request, 'dopamine/detail.html', context)
 def category(request):
     categories = Category.objects.filter(is_sub =False)
+    customer = request.user
+    order, created = Order.objects.get_or_create(customer =customer,complete =False)
+    cartItems = order.get_cart_items
     active_category = request.GET.get('category','')
     if active_category:
         products = Product.objects.filter(category__slug = active_category)
-    context = {'categories':categories, 'products':products, 'active_category':category}
+    context = {'categories':categories, 'products':products, 'cartItems':cartItems, 'active_category':category}
     return render(request, 'dopamine/category.html',context)
 def search(request):
     if request.method == "POST":
@@ -90,6 +93,11 @@ def home(request):
         cartItems = order['get_cart_items']
         user_not_login = "show"
         user_login = "hidden"
+    recipes = Recipe.objects.all()  # Lấy danh sách công thức
+    context = {
+        'recipes': recipes,
+        # Các dữ liệu khác
+    }
     categories = Category.objects.filter(is_sub =False)
     products = Product.objects.all()
     context= {'categories':categories,'products': products, 'cartItems':cartItems,'user_not_login':user_not_login,'user_login':user_login}
@@ -158,4 +166,16 @@ def updateItem(request):
     if orderItem.quantity<=0:
         orderItem.delete()
     return JsonResponse('added', safe=False)
+
+def recipe_detail(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    return render(request, 'dopamine/recipe_detail.html', {'recipe': recipe})
+
+def all_recipes(request):
+    recipe_type = request.GET.get('type', '')  # Lấy loại món ăn từ query parameters
+    if recipe_type:
+        recipes = Recipe.objects.filter(type=recipe_type)
+    else:
+        recipes = Recipe.objects.all()
+    return render(request, 'dopamine/all_recipes.html', {'recipes': recipes})
 

@@ -1,0 +1,17 @@
+{% extends "dopamine/base.html" %}
+{% load static %} 
+
+{% block extra_css %}
+<link href="{% static 'dopamine/css/all_recipes.css' %}" rel="stylesheet">
+{% endblock %}
+{% block main-content %}
+<h2 class="all-recipes-title">Tất cả công thức</h2>
+<div class="recipe-list">
+    {% for recipe in recipes %}
+    <div class="recipe-item">
+    <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}" style="width:180px; height:auto;">
+    <h5><a href="{% url 'recipe_detail' recipe.id %}">{{ recipe.name }}</a></h5>
+    </div>
+    {% endfor %}
+</div>
+{% endblock main-content %}

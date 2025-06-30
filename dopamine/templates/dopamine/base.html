@@ -56,7 +56,7 @@
             <nav class="navbar navbar-expand-lg bg-body-tertiary" style="height:70px; font-size: 18px;">
             <div class="container-fluid">
               <a class="navbar-brand" href="{% url 'home' %}">
-                <img src="{% static 'dopamine/images/DoFood.png' %}" width="70" height="70"/>
+                <img src="{% static 'dopamine/images/Dopamine3.png' %}" width="70" height="70"/>
               </a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -76,18 +76,19 @@
                     {%endfor%}
                     </ul>
                   </li>
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Công thức
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Salad Cải Thảo</a></li>
-                       
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Xem tất cả công thức</a></li>
-                    </ul>
-                </li>
                 
+                      <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Công thức
+                      </a>
+                      <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="{% url 'all_recipes' %}?type=vegetarian">Công thức món chay</a></li>
+                          <li><a class="dropdown-item" href="{% url 'all_recipes' %}?type=meat">Công thức món mặn</a></li>
+                          <li><a class="dropdown-item" href="{% url 'all_recipes' %}?type=dessert">Công thức món tráng miệng</a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li><a class="dropdown-item" href="{% url 'all_recipes' %}">Tất cả công thức</a></li>
+                      </ul>
+                  </li>        
                   <li class="nav-item">
                     <a class="nav-link" href="#">Giới thiệu</a>
                   </li>
@@ -114,7 +115,7 @@
 
                 <div class="form-inline my-2 my-lg-0">
 
-                  <a href="{% url 'cart' %}"><img id="cart-icon" src="{% static 'dopamine/images/cart.png'%}"></a>
+                  <a href="{% url 'cart' %}"><img id="cart-icon" src="{% static 'dopamine/images/shopp.png'%}"></a>
                   <p id='cart-total' >{{cartItems}}</p>
               </div>
             </div>
