@@ -11,9 +11,42 @@
     <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}" style="width:200px; height:auto;">
     <h3>Mô tả</h3>
     <p>{{ recipe.description }}</p>
-    <h3>Nguyên liệu</h3>
-    <p>{{ recipe.ingredients }}</p>
-    <h3>Cách thực hiện</h3>
-    <p>{{ recipe.steps }}</p>
+  
+   <h3>Nguyên liệu</h3>
+<p>{{ recipe.ingredients|linebreaks }}</p>
+
+<h3>Hướng dẫn</h3>
+<p>
+    {% for step in steps_list %}
+    {{ step|safe }}<br>
+    {% endfor %}
+</p>
+
+ {% comment %} <h3>Các bước thực hiện chi tiết (kèm hình ảnh)</h3>
+    <div class="detailed-steps">
+        {% for step in detailed_steps %}
+        <div class="step" style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <h4 style="font-size: 18px; font-weight: bold;">Bước {{ step.step_number }}</h4>
+            <p style="font-size: 16px; line-height: 1.5;">{{ step.description|linebreaks }}</p>
+            {% if step.image %}
+            <img src="{{ step.image.url }}" alt="Hình minh họa bước {{ step.step_number }}" style="width:100%; max-width:500px; height:auto; margin-top: 10px; border-radius: 5px;">
+            {% endif %}
+        </div>
+        {% empty %}
+        <p>Không có bước nào được thêm vào.</p>
+        {% endfor %}
+    </div> {% endcomment %}
+<h3>Các bước thực hiện chi tiết (kèm hình ảnh)</h3>
+<div class="detailed-steps">
+    {% for step in detailed_steps %}
+    <div class="step" style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        <p style="font-size: 16px; line-height: 1.5;">{{ step.description|linebreaks }}</p>
+        {% if step.image %}
+        <img src="{{ step.image.url }}" alt="Hình minh họa" style="width:100%; max-width:500px; height:auto; margin-top: 10px; border-radius: 5px;">
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+
 </div>
 {% endblock main-content %}

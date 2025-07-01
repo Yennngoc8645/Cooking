@@ -32,6 +32,15 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.name
+class RecipeStep(models.Model):
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='detail_step')
+    description = models.TextField()  # Nội dung của bước (đã bao gồm thông tin bước như "Bước 1:")
+    image = models.ImageField(upload_to='steps/', null=True, blank=True)  # Hình minh họa
+
+    def __str__(self):
+        # Hiển thị phần đầu của nội dung bước để phân biệt trong Django Admin
+        return f"Bước: {self.description[:50]} của {self.recipe.name}"
+
 class Category(models.Model):
     sub_category = models.ForeignKey('self', on_delete=models.CASCADE, related_name='sub_categories', null=True,blank=True)
     is_sub =  models.BooleanField(default=False)

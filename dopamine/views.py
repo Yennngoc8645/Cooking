@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 
 from django.shortcuts import redirect, get_object_or_404
-from .models import Product, Order, OrderItem, Recipe
+from .models import Product, Order, OrderItem, Recipe, RecipeStep
 
 # Create your views here.
 def detail(request):
@@ -169,7 +169,22 @@ def updateItem(request):
 
 def recipe_detail(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
-    return render(request, 'dopamine/recipe_detail.html', {'recipe': recipe})
+    detailed_steps = RecipeStep.objects.filter(recipe=recipe)
+    # Tách các dòng và thêm in đậm cho "Bước X:"
+    steps_list = []
+    for line in recipe.steps.split('\n'):
+        if line.startswith('Bước'):
+            steps_list.append(f"<strong>{line}</strong>")
+        else:
+            steps_list.append(line)
+
+    context = {
+        'recipe': recipe,
+        'detailed_steps': detailed_steps,
+    }
+    return render(request, 'dopamine/recipe_detail.html', context)
+
+
 
 def all_recipes(request):
     recipe_type = request.GET.get('type', '')  # Lấy loại món ăn từ query parameters
