@@ -37,7 +37,7 @@
             <img src="{% static 'dopamine/images/shoppingcart.png' %}" alt="Thêm vào giỏ hàng">
           </a>     
 
-          <a href="{% url 'detail' %}?id={{product.id}}"><img src="{% static 'dopamine/images/search.png' %}" alt="Xem chi tiết"></a>
+          <a href="{% url 'detail' product.id %}"><img src="{% static 'dopamine/images/search.png' %}" alt="Xem chi tiết"></a>
         </div>
       </div>
       <div class="product-details">

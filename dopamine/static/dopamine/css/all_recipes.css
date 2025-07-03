@@ -6,7 +6,7 @@
 }
 
 .recipe-item {
-    margin-left: 10px; /* Khoảng cách từng card công thức với lề trái */
+    margin-left: 6px; /* Khoảng cách từng card công thức với lề trái */
     text-align: center; /* Căn giữa nội dung bên trong card */
     padding: 10px; /* Tạo khoảng cách bên trong */
     background-color: #f9f9f9; /* Màu nền nhạt cho từng card */

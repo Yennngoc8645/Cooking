@@ -1,0 +1,26 @@
+{% extends "dopamine/base.html" %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <h2 class="mb-3 text-success">🎉 Đặt hàng thành công!</h2>
+    <p>Cảm ơn bạn đã mua hàng tại Dopamine. Chúng tôi sẽ liên hệ với bạn sớm nhất để xác nhận đơn hàng.</p>
+
+    <hr class="my-5">
+
+    <h4 class="mb-4">✨ Sản phẩm bạn có thể thích:</h4>
+    <div class="row justify-content-center">
+        {% for product in suggested_products %}
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 shadow">
+                <img src="{{ product.ImageProduct.url }}" class="card-img-top" alt="{{ product.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text text-danger">{{ product.price }} VNĐ</p>
+                    <a href="{% url 'detail' product.id %}" class="btn btn-outline-primary btn-sm">Xem chi tiết</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

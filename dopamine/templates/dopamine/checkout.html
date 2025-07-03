@@ -2,68 +2,84 @@
 {% load static %}
 {% block content_checkout %}
 <link href="{% static 'dopamine/css/checkout.css' %}" rel="stylesheet"/> 
-     <div class="row" style='width:100%'>
-		<div class="col-lg-6">
-			<div class="box-element" id="form-wrapper">
-				<form id="form">
-					<div id="user-info">
-						<div class="form-field">
-							<input required class="form-control" type="text" name="name" placeholder="Tên">
-						</div>
-						<div class="form-field">
-							<input required class="form-control" type="email" name="email" placeholder="Email">
-						</div>
-					</div>
-					
-					<div id="shipping-info">
-						<hr>
-						<p>Thông tin người dùng:</p>
-						<hr>
-						<div class="form-field">
-							<input class="form-control" type="text" name="address" placeholder="Tỉnh/Thành">
-						</div>
-						<div class="form-field">
-							<input class="form-control" type="text" name="city" placeholder="Quận/Huyện">
-						</div>
-						<div class="form-field">
-							<input class="form-control" type="text" name="state" placeholder="Xã/Phường">
-						</div>
-						<div class="form-field">
-							<input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
-						</div>
-						<div class="form-field">
-							<input class="form-control" type="text" name="country" placeholder="Zip code..">
-						</div>
-					</div>
 
-					<hr>
-					<input id="form-button" class="btn btn-success btn-block" type="submit" value="Continue">
-				</form>
-			</div>
+<div class="container mt-4">
+  <div class="row">
+    
+    <!-- THÔNG TIN NGƯỜI DÙNG -->
+    <div class="col-md-6">
+      <div class="box-element">
+        <h4 class="mb-3">Thông tin người đặt</h4>
+        <form method="POST" action="{% url 'process_order' %}">
+          {% csrf_token %}
+          <div class="form-group mb-2">
+            <label>Họ và Tên</label>
+            <input required class="form-control" type="text" name="name" placeholder=" ">
+          </div>
+          <div class="form-group mb-2">
+            <label>Email</label>
+            <input required class="form-control" type="email" name="email" placeholder=" ">
+          </div>
+		  <div class="form-group mb-2">
+			<label>Số điện thoại</label>
+            <input class="form-control" type="text" name="phone" placeholder=" " required>
+          </div>
+          <hr>
+          <h5>Địa chỉ giao hàng</h5>
+          <div class="form-group mb-2">
+			<label>Tỉnh/Thành phố</label>
+            <input class="form-control" type="text" name="address" placeholder=" ">
+          </div>
+          <div class="form-group mb-2">
+			<label>Quận/Huyện</label>
+            <input class="form-control" type="text" name="city" placeholder=" ">
+          </div>
+          <div class="form-group mb-2">
+			<label>Phường/Xã</label>
+            <input class="form-control" type="text" name="state" placeholder=" ">
+          </div>
+		  <div class="form-group mb-2">
+			<label>Tên đường, tòa nhà, số nhà</label>
+            <input class="form-control" type="text" name="state" placeholder=" ">
+          </div>
+          <!-- ⚠️ Loại bỏ dòng: Zipcode -->
+		{% comment %} <div class="form-group mb-2">
+		  <input class="form-control" type="text" name="country" placeholder="Quốc gia (nếu cần)">
+		</div> {% endcomment %}
+		
+          <hr>
+          <h5>Phương thức thanh toán</h5>
+          <select name="payment_method" class="form-control mb-3" required>
+            <option value="cod">Thanh toán khi nhận hàng (COD)</option>
+            <option value="bank">Chuyển khoản ngân hàng</option>
+            <option value="momo">Momo</option>
+          </select>
 
-			<br>
-			<div class="box-element hidden" id="payment-info">
-				<small>Phương thức thanh toán</small>
-			</div>
-			
-		</div>
+          <button type="submit" class="btn btn-success w-100 mt-3">Xác nhận đặt hàng</button>
+        </form>
+      </div>
+    </div>
 
-		<div class="col-lg-6">
-			<div class="box-element">
-				<a  class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
-				<hr>
-				<h3>Order Summary</h3>
-				<hr>
-				{%for item in items%}
-				<div class="cart-row">
-					<div style="flex:2"><img class="row-image" src="{{item.product.ImageProduct}}"></div>
-					<div style="flex:2"><p>{{item.product.name}}</p></div>
-					<div style="flex:1"><p>{{item.product.price}}</p></div>
-					<div style="flex:1"><p>{{item.quantity}}</p></div>
-				</div>
-				{%endfor%}
-				<h5>Items: {{order.get_cart_items}}</h5>
-				<h5>Total: {{order.get_cart_total}}</h5>
-		</div>
-	</div>
-{% endblock content_checkout %}
+    <!-- TÓM TẮT ĐƠN HÀNG -->
+    <div class="col-md-6">
+      <div class="box-element">
+        <h4>Tóm tắt đơn hàng</h4>
+        <hr>
+        {% for item in items %}
+        <div class="cart-row mb-2 d-flex align-items-center">
+          <div style="flex:2"><img class="row-image" src="{{ item.product.ImageProduct }}"></div>
+          <div style="flex:3">{{ item.product.name }}</div>
+          <div style="flex:1">{{ item.product.price }}đ</div>
+          <div style="flex:1">x {{ item.quantity }}</div>
+        </div>
+        {% endfor %}
+        <hr>
+        <h5>Tổng số lượng: {{ order.get_cart_items }}</h5>
+        <h5>Tổng tiền: {{ order.get_cart_total }}đ</h5>
+        <a href="{% url 'cart' %}" class="btn btn-outline-dark mt-3">← Quay lại giỏ hàng</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

@@ -29,9 +29,9 @@ class Recipe(models.Model):
                 output_size = (300, 300)
                 img.thumbnail(output_size)
                 img.save(self.image.path)
-
     def __str__(self):
         return self.name
+    
 class RecipeStep(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='detail_step')
     description = models.TextField()  # Nội dung của bước (đã bao gồm thông tin bước như "Bước 1:")
@@ -78,7 +78,17 @@ class Order(models.Model):
     date_order = models.DateTimeField(auto_now_add=True)
     complete = models.BooleanField(default=False)
     transaction_id = models.CharField(max_length=200, null=True)
-
+    PAYMENT_METHOD_CHOICES = [
+        ('cod', 'Thanh toán khi nhận hàng (COD)'),
+        ('bank', 'Chuyển khoản ngân hàng'),
+        ('momo', 'Momo'),
+    ]
+    payment_method = models.CharField(
+        max_length=20,
+        choices=PAYMENT_METHOD_CHOICES,
+        null=True,
+        blank=True
+    )
     def __str__(self):
         return str(self.id)
     @property
@@ -108,3 +118,4 @@ class ShippingAddress(models.Model):
     address = models.CharField(max_length=200, null=True)
     city = models.CharField(max_length=200, null=True)
     state = models.CharField(max_length=10, null=True)
+    phone = models.CharField(max_length=20, null=True, blank=True)

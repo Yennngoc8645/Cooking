@@ -21,3 +21,38 @@
     font-weight: bold; /* In đậm cho các từ như "Bước 1" */
     color: #007bff; /* Màu xanh nổi bật */
 }
+.recipe-intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+  margin: 20px 0;
+}
+
+.intro-text {
+  flex: 1.5;
+}
+
+.intro-text h1 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.intro-text p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #333;
+}
+
+.intro-image {
+  flex: 1;
+  max-width: 250px;
+}
+
+.intro-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}

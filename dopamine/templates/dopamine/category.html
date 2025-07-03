@@ -26,7 +26,7 @@
                     <a href="#" data-product="{{ product.id }}" data-action="add" class="add-to-cart">
                       <img src="{% static 'dopamine/images/cart.png' %}" alt="Thêm vào giỏ hàng">
                     </a>
-                    <a href="#">
+                    <a href="{% url 'detail' product.id %}">
                       <img src="{% static 'dopamine/images/view.png' %}" alt="Xem chi tiết">
                     </a>
                   </div>
