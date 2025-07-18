@@ -1,0 +1,112 @@
+{% extends 'dopamine/base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  .momo-page {
+    background-color: #ffe4f1;
+  }
+  .momo-container {
+    max-width: 100%;
+    padding: 40px;
+    background: #fff;
+    border-radius: 10px;
+    border: 3px solid #ec4899;
+    margin: 0 auto;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  }
+  .momo-logo {
+    height: 50px;
+  }
+  .header-title {
+    font-size: 24px;
+    color: #ec4899;
+    font-weight: bold;
+  }
+  .left-box {
+    background: #fff0f5;
+    padding: 25px;
+    border-radius: 10px;
+  }
+  .right-box {
+    background: #ffeaf4;
+    padding: 25px;
+    border-radius: 10px;
+  }
+  .pink-btn {
+    background-color: #ec4899;
+    color: white;
+    font-weight: bold;
+    border: none;
+  }
+  .pink-btn:hover {
+    background-color: #d63684;
+  }
+  #countdown {
+    font-size: 18px;
+    font-weight: bold;
+    color: red;
+  }
+</style>
+
+<div class="container-fluid momo-page py-4 px-5">
+  <div class="momo-container">
+    <div class="text-center mb-4">
+      <img src="{% static 'dopamine/images/Logo-momo.webp' %}" class="momo-logo" alt="Momo">
+      <h2 class="header-title mt-2">Cổng thanh toán MoMo</h2>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 left-box">
+        <h4>Thông tin đơn hàng</h4>
+        <p><strong>Nhà cung cấp:</strong> MoMo Demo</p>
+        <p><strong>Mã đơn hàng:</strong> {{ order.id }}</p>
+        <p><strong>Mô tả:</strong> Thanh toán đơn hàng tại Dopamine</p>
+        <p><strong>Số tiền:</strong> {{ order.get_cart_total|floatformat:0 }}đ</p>
+        <p><strong>Thời gian còn lại:</strong> <span id="countdown">10:00</span></p>
+        <img src="{% static 'dopamine/images/QR.jpg' %}" alt="QR Momo" style="max-width: 50%; border-radius: 8px; margin-top: 20px;">
+      </div>
+
+      <div class="col-md-6 right-box">
+        <h5>Nhập thông tin thẻ để thanh toán</h5>
+        <form method="POST" action="{% url 'thankyou' %}">
+          {% csrf_token %}
+          <div class="form-group mb-2">
+            <label>Số thẻ</label>
+            <input type="text" class="form-control" placeholder="Nhập số thẻ" required>
+          </div>
+          <div class="form-group mb-2">
+            <label>Tên chủ thẻ</label>
+            <input type="text" class="form-control" placeholder="Nhập tên chủ thẻ" required>
+          </div>
+          <div class="form-group mb-2">
+            <label>Ngày phát hành (MM/YY)</label>
+            <input type="text" class="form-control" placeholder="MM/YY" required>
+          </div>
+          <div class="form-group mb-3">
+            <label>Số điện thoại</label>
+            <input type="text" class="form-control" placeholder="Nhập số điện thoại" required>
+          </div>
+          <button class="btn pink-btn w-100 py-2">🔒 Thanh toán</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let time = 600;
+let countdownEl = document.getElementById('countdown');
+let countdown = setInterval(() => {
+  if (time <= 0) {
+    countdownEl.innerText = "Hết hạn!";
+    clearInterval(countdown);
+    return;
+  }
+  let minutes = Math.floor(time / 60);
+  let seconds = time % 60;
+  countdownEl.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  time--;
+}, 1000);
+</script>
+{% endblock %}

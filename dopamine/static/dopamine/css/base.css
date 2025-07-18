@@ -1,0 +1,133 @@
+.footer-modern {
+  background-color: #1b701f;
+  color: white;
+  border-radius: 12px 12px 0 0;
+  font-size: 15px;
+  padding: 20px 0; /* giảm padding để chiều cao gọn lại */
+}
+
+.footer-modern a {
+  color: #c8e6c9;
+  text-decoration: none;
+}
+
+.footer-modern a:hover {
+  text-decoration: underline;
+}
+
+.footer-title {
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 10px;
+  padding-top: 5px;
+}
+
+.purchase-steps {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.step {
+  text-align: center;
+  width: 28%;
+}
+
+.step-icon {
+  height: 32px;
+  margin-bottom: 5px;
+  filter: brightness(0) invert(1);
+  transition: transform 0.2s ease;
+}
+
+.step:hover .step-icon {
+  transform: scale(1.1);
+}
+
+.email-text,
+.phone-text,
+.page-text {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.footer-modern img {
+  max-width: 100%;
+  height: auto;
+}
+
+.footer-divider {
+  border-color: rgba(255, 255, 255, 0.1);
+  margin-bottom: 10px;
+}
+
+.footer-modern .container {
+  max-width: 95%;
+}
+
+.footer-modern .text-center {
+  font-size: 14px;
+  margin-top: 10px;
+}
+.footer-clean {
+  background-color: #00511b; /* đậm hơn nhiều so với nền xanh nhạt toàn trang */
+  color: white;
+  padding-top: 40px;
+  padding-bottom: 30px;
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1); /* tạo bóng đổ nổi bật */
+}
+
+.footer-clean a {
+  color: #b9fbc0;
+  text-decoration: none;
+}
+
+.footer-clean a:hover {
+  text-decoration: underline;
+  color: #a2e4b8;
+}
+
+.footer-clean h5 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.footer-clean img.icon-mini {
+  height: 28px;
+  margin-bottom: 5px;
+  filter: brightness(0) invert(1);
+}
+
+.footer-clean p {
+  margin-bottom: 6px;
+}
+
+.footer-clean .small-step > div {
+  width: 30%;
+  margin-bottom: 10px;
+}
+
+.footer-clean p {
+  margin-bottom: 6px;
+}
+/* Dropdown cấp 2 */
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu > .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-left: 0.1rem;
+  margin-top: -0.5rem;
+  display: none;
+  position: absolute;
+}
+
+/* Hover thì hiện menu con */
+.dropdown-submenu:hover > .dropdown-menu {
+  display: block;
+}
+

@@ -1,46 +1,47 @@
 {% extends "dopamine/base.html" %}
 {% load static %}
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Category</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- Liên kết CSS -->
-        <link href="{% static 'dopamine/css/category.css' %}" rel="stylesheet" />
-    </head>
-    <body>
-        {% block register %}
-        <!-- Container chính -->
-        <div class="container">
-          <div class="row">
-            {% for product in products %}
-            <!-- Cột sản phẩm -->
-            <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="box-element">
-                <!-- Hình ảnh sản phẩm -->
-                <div class="product-image">
-                  <img class="thumbnail" src="{{ product.ImageProduct }}" alt="{{ product.name }}">
-                  <!-- Nút hành động -->
-                  <div class="button-container">
-                    <a href="#" data-product="{{ product.id }}" data-action="add" class="add-to-cart">
-                      <img src="{% static 'dopamine/images/cart.png' %}" alt="Thêm vào giỏ hàng">
-                    </a>
-                    <a href="{% url 'detail' product.id %}">
-                      <img src="{% static 'dopamine/images/view.png' %}" alt="Xem chi tiết">
-                    </a>
-                  </div>
-                </div>
-                <!-- Chi tiết sản phẩm -->
-                <div class="product-details">
-                  <h5 class="product-name">{{ product.name }}</h5>
-                  <h5 class="product-price">{{ product.price|floatformat:3 }}đ</h5>
-                </div>
-              </div>
-            </div>
-            {% endfor %}
-          </div>
+{% load humanize %}
+{% block content %}
+<div class="container py-4" style="background-color: #e9fbe7;">
+  <div class="text-center mb-4">
+   <h3 class="fw-bold text-success">
+    Danh mục: {{ category_obj.name|default:"Tất cả sản phẩm" }}
+   </h3>
+    <hr class="border-success opacity-50" style="width: 100px; margin: 0 auto;">
+  </div>
+
+  <div class="row">
+  {% for product in products %}
+  <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+    <div class="card h-100 shadow-sm border-0 rounded-4 p-3">
+      <!-- Ảnh sản phẩm -->
+      <img src="{{ product.ImageProduct }}" class="card-img-top mx-auto d-block" alt="{{ product.name }}" style="height: 180px; object-fit: contain;">
+
+      <!-- Hàng dưới: Icon trái + Thông tin giữa + Icon phải -->
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        
+        <!-- Icon giỏ hàng bên trái -->
+        <a href="#" data-product="{{ product.id }}" data-action="add">
+          <img src="{% static 'dopamine/images/shopp.png' %}" alt="Thêm vào giỏ hàng" style="width: 28px; height: 28px;">
+        </a>
+
+        <!-- Tên và giá ở giữa -->
+        <div class="text-center flex-grow-1 px-2">
+          <h6 class="fw-bold text-success mb-1">{{ product.name }}</h6>
+          <p class="mb-0 text-dark">{{ product.price|floatformat:"g"|intcomma }} đ/{{ product.unit|capfirst }}</p>
         </div>
-        {% endblock register %}
-    </body>
-</html>
+
+        <!-- Icon xem chi tiết bên phải -->
+        <a href="{% url 'detail' product.id %}">
+          <img src="{% static 'dopamine/images/search.png' %}" alt="Xem chi tiết" style="width: 28px; height: 28px;">
+        </a>
+
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <p class="text-center text-muted">Không có sản phẩm nào trong danh mục này.</p>
+  {% endfor %}
+</div>
+
+{% endblock %}

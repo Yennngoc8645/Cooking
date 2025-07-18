@@ -1,52 +1,90 @@
 {% extends 'dopamine/base.html' %}
 {% load static %}
-{% block cart_content %}
-<link href="{% static 'dopamine/css/cart.css' %}" rel="stylesheet"/> 
-<div class="row" style='width:100%'>
-	<div class="col-lg-12">
-		<div class="box-element">
+{% load humanize %}
+{% block content %}
+<link href="{% static 'dopamine/css/cart.css' %}" rel="stylesheet" />
+<script>
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+{% comment %} const csrftoken = getCookie('csrftoken'); {% endcomment %}
+{% comment %} const user = '{{ request.user }}'; {% endcomment %}
+</script>
 
-			<br>
-			<br>
-			<table class="table">
-				<tr>
-					<th><h5>Items: <strong>{{order.get_cart_items}}</strong></h5></th>
-					<th><h5>Total:<strong> {{order.get_cart_total}}</strong></h5></th>
-					<th>
-						<a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Checkout</a>
-					</th>
-				</tr>
-			</table>
+<div class="container d-flex justify-content-between mt-5">
+  <!-- Bảng sản phẩm -->
+  <div class="cart-left col-md-8">
+    {% if items %}
+      <table class="table cart-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+        <tr>
+          <td><img class="cart-img" src="{{ item.product.ImageProduct }}" alt="{{ item.product.name }}"></td>
+          <td>{{ item.product.name }}</td>
+          
+          <!-- Giá sản phẩm -->
+          <td>
+            {{ item.product.price|floatformat:"g"|intcomma }} đ
+          </td>
+          
+          <!-- Nút tăng giảm số lượng -->
+          <td>
+            <div class="quantity-box">
+              <button data-product="{{ item.product.id }}" data-action="remove" class="chg-quantity">−</button>
+              <span class="qty">{{ item.quantity }}</span>
+              <button data-product="{{ item.product.id }}" data-action="add" class="chg-quantity">+</button>
+            </div>
+          </td>
+          
+          <!-- Tổng tiền cho item -->
+          <td>
+            {{ item.get_total|floatformat:"g"|intcomma }} đ
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      </table>
+    {% else %}
+      <div class="alert alert-info text-center p-4 bg-white shadow rounded">
+        <strong>🛒 Chưa có sản phẩm nào trong giỏ hàng!</strong>
+      </div>
+    {% endif %}
+  </div>
 
-		</div>
-
-		<br>
-		<div class="box-element">
-			<div class="cart-row">
-				<div style="flex:2"><strong>Product</strong></div>
-				<div style="flex:2"><strong>Item</strong></div>
-				<div style="flex:1"><strong>Price</strong></div>
-				<div style="flex:1"><strong>Quantity</strong></div>
-				<div style="flex:1"><strong>Total</strong></div>
-			</div>
-			{% for item in items %}
-			<div class="cart-row">
-				<div style="flex:2"><img class="row-image" src="{{item.product.ImageProduct}}"></div>
-				<div style="flex:2"><p>{{item.product.name}}</p></div>
-				<div style="flex:1"><p>{{item.product.price}}</p></div>
-				<div style="flex:1">
-					<p class="quantity">{{item.quantity}}</p>
-					<div class="quantity">
-						<img data-product = {{item.product.id}} data-action = 'add' class="chg-quantity add-to-cart" src="{% static  'dopamine/images/arrow-up.png' %}">
-				
-						<img data-product = {{item.product.id}} data-action = 'remove' class="chg-quantity add-to-cart" src="{% static  'dopamine/images/arrow-down.png' %}">
-
-					</div>
-				</div>
-				<div style="flex:1"><p>{{item.get_total}}</p></div>
-			</div>
-			{% endfor %}
-		</div>
-	</div>
+  <!-- Cart Total bên phải -->
+ <div class="cart-summary-box shadow-lg p-4 rounded">
+  <h4 class="text-center mb-4">🧾 Cart Total</h4>
+  <p class="d-flex justify-content-between">
+    <span>Items:</span> <strong>{{ order.get_cart_items }}</strong>
+  </p>
+  <p class="d-flex justify-content-between mb-3">
+    <span>Total:</span>
+    <strong class="text-danger">
+      {{ order.get_cart_total|floatformat:"g"|intcomma }} đ
+    </strong>
+  </p>
+  <hr>
+  <a href="{% url 'checkout' %}" class="btn btn-success btn-block w-100 mt-3 fw-bold">🛍️ Thanh toán</a>
 </div>
-{% endblock cart_content %} 
+
+{% endblock content %}

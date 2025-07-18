@@ -2,9 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from PIL import Image
-#change forms register django
-#category
-#Congthuc
+    
 class Recipe(models.Model):
     # Các lựa chọn phân loại công thức
     TYPE_CHOICES = [
@@ -13,7 +11,7 @@ class Recipe(models.Model):
         ('dessert', 'Món tráng miệng'),
     ]
     
-    name = models.CharField(max_length=200)  # Tên món ăn
+    name = models.CharField(max_length=300)  # Tên món ăn
     description = models.TextField(null=True, blank=True)  # Mô tả món ăn
     ingredients = models.TextField()  # Nguyên liệu
     steps = models.TextField()  # Các bước thực hiện
@@ -41,13 +39,18 @@ class RecipeStep(models.Model):
         # Hiển thị phần đầu của nội dung bước để phân biệt trong Django Admin
         return f"Bước: {self.description[:50]} của {self.recipe.name}"
 
+from django.utils.text import slugify
+
 class Category(models.Model):
-    sub_category = models.ForeignKey('self', on_delete=models.CASCADE, related_name='sub_categories', null=True,blank=True)
-    is_sub =  models.BooleanField(default=False)
-    name = models.CharField(max_length=200,null=True)
-    slug = models.SlugField(max_length=200,unique=True)
-    def __str__(self):
-        return self.name
+    name = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True, blank=True)
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='children', on_delete=models.SET_NULL)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)  # Tự động tạo slug không dấu
+        super().save(*args, **kwargs)
+
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
@@ -56,9 +59,16 @@ class CreateUserForm(UserCreationForm):
 class Product(models.Model):
     category = models.ManyToManyField(Category,related_name='product')
     name = models.CharField(max_length=200, null=True)  # Tên sản phẩm (ví dụ: Rau cải, Cà rốt)
-    price = models.DecimalField(max_digits=10, decimal_places=3)  # Giá sản phẩm
+    price = models.DecimalField(max_digits=12, decimal_places=0)  # Giá sản phẩm
     image = models.ImageField(upload_to='images/',null=True,blank=True)
     quantity = models.IntegerField(default=0)  # Số lượng trong kho
+    UNIT_CHOICES = [
+    ('kg', 'Kg'),
+    ('hop', 'Hộp'),
+    ('mieng', 'Miếng'),
+    ('bo', 'Bó'),
+    ('khay', 'Khay'),
+]
     unit = models.CharField(max_length=50, default='kg')  # Đơn vị tính (ví dụ: kg, quả, bó)
     detail = models.TextField(null=True,blank=True)
 
@@ -71,7 +81,6 @@ class Product(models.Model):
         except:
             url = ''
         return url
-
 
 class Order(models.Model):
     customer = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name="orders")
@@ -93,7 +102,7 @@ class Order(models.Model):
         return str(self.id)
     @property
     def get_cart_items(self):
-        orderitems = self.items.all()
+        orderitems = self.items.filter(product__isnull=False)
         total = sum([item.quantity for item in orderitems])
         return total
     @property
@@ -109,8 +118,9 @@ class OrderItem(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     @property
     def get_total(self):
-        total = self.product.price * self.quantity
-        return total
+        if self.product and self.product.price:
+            return self.product.price * self.quantity
+        return 0
 
 class ShippingAddress(models.Model):
     customer = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name="addresses")

@@ -3,19 +3,20 @@
 /* Tổng thể */
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
+    background-color: #dbffde;
+    color: #000000;
     line-height: 1.6;
-    padding: 20px 0;
+    padding: 0px 0;
+    margin: 0px;
 }
 
 /* Container */
 .box-element {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f4fff5;        /* nền nhẹ */
+    border: 2px solid #28a745;        /* viền xanh rõ */
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
 }
 
 /* Form Input */
@@ -99,4 +100,24 @@ body {
     .form-field {
         width: 100%;
     }
+}
+.order-summary-box {
+    background-color: #f4fff5;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+.order-summary-box:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.box-element h4 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #28a745;
+    margin-bottom: 15px;
+    border-bottom: 1px dashed #28a745;
+    padding-bottom: 5px;
 }

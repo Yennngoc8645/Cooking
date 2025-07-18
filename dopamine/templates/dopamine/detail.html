@@ -1,55 +1,90 @@
 {% extends "dopamine/base.html" %}
 {% load static %}
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        {% comment %} <link rel="stylesheet" href="{% static 'dopamine/css/detail.css' %}"> {% endcomment %}
-        {% block extra_css %}
-        <link rel="stylesheet" href="{% static 'dopamine/css/detail.css' %}">
-        {% endblock %} 
-    </head>
-    <body>
-      {% block register %}
-      <div class="container mt-5 mb-5">
-            <div class="row d-flex justify-content-center">
-                <div class="col-md-10">
-                <div class="card">
-                    <div class="row">
-                    <div class="col-md-6">
-                        <div class="images p-3">
-                        <div class="text-center p-4">
-                            <img id="main-image" src="{{ product.ImageProduct }}" width="250" />
-                        </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="product p-4">
-                        <div class="mt-4 mb-3">
-                            <span class="text-uppercase text-muted brand">Orianz</span>
-                            <h5 class="text-uppercase">{{ product.name }}</h5>
-                            <div class="price d-flex flex-row align-items-center">
-                            <span class="act-price">$ {{ product.price }}</span>
-                            </div>
-                        </div>
-                        <p class="about">{{ product.detail }}</p>
-                        <div class="cart mt-4 align-items-center">
-                            <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary add-to-cart">
-                            Thêm vào giỏ hàng
-                            </a>
-                            <i class="fa fa-heart text-muted"></i>
-                            <i class="fa fa-share-alt text-muted"></i>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
-        {% endblock register %}
-    </body>
-</html>
+{% load humanize %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'dopamine/css/detail.css' %}">
+<style>
+  .product-card {
+    transition: box-shadow 0.3s ease;
+  }
+  .product-card:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+  .rating-stars {
+    color: #ffc107;
+    font-size: 18px;
+  }
+  .status {
+    font-weight: bold;
+    color: green;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5" style="padding-bottom: 60px;">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-lg-5 col-md-6 mb-4">
+      <div class="rounded-4 shadow-sm p-4 text-center bg-white product-card">
+        <img src="{{ product.ImageProduct }}" alt="{{ product.name }}" class="img-fluid rounded-3" style="max-height: 300px; object-fit: contain;">
+      </div>
+    </div>
+    <div class="col-lg-7 col-md-6">
+      <div class="rounded-4 shadow-sm p-4 bg-white product-card">
+        <span class="text-uppercase text-muted small">DopamineFoods</span>
+        <h2 class="fw-bold text-success">{{ product.name }}</h2>
+
+        <!-- Đánh giá sao -->
+        <div class="rating-stars mb-2">
+          ⭐⭐⭐⭐☆
+          <small class="text-muted">(24 đánh giá)</small>
+        </div>
+
+        <!-- Giá và đơn vị -->
+        <p class="fs-5 text-dark mb-1">
+          <strong class="text-danger">{{ product.price|floatformat:"g"|intcomma }} đ</strong> / {{ product.unit }}
+        </p>
+
+        <!-- Tình trạng -->
+        <p class="status mb-3">✔️ Còn hàng</p>
+
+        <!-- Mô tả -->
+        <p class="text-muted mt-3">{{ product.detail|default:"Không có mô tả cho sản phẩm này." }}</p>
+
+        <!-- Hành động -->
+        <div class="mt-4 d-flex gap-3 flex-wrap">
+          <a href="{% url 'add_to_cart' product.id %}" class="btn btn-success px-4 py-2 rounded-pill shadow-sm">
+            🛒 Thêm vào giỏ hàng
+          </a>
+          <button class="btn btn-outline-danger px-4 py-2 rounded-pill shadow-sm" disabled>
+            ❤️ Yêu thích
+          </button>
+          <button class="btn btn-outline-primary px-4 py-2 rounded-pill shadow-sm" disabled>
+            🔗 Chia sẻ
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gợi ý sản phẩm liên quan -->
+ <div class="container mt-5">
+  <h4 class="text-success mb-3">Sản phẩm liên quan</h4>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+    {% for sp in related_products %}
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="{{ sp.ImageProduct }}" class="card-img-top" alt="{{ sp.name }}" style="height: 180px; object-fit: contain;">
+        <div class="card-body">
+          <h6 class="card-title text-success">{{ sp.name }}</h6>
+          <p class="card-text text-danger fw-bold">{{ sp.price|floatformat:"g"|intcomma }} đ / {{ sp.unit }}</p>
+          <a href="{% url 'detail' sp.id %}" class="btn btn-outline-success btn-sm rounded-pill">Xem chi tiết</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+</div>
+{% endblock content %}

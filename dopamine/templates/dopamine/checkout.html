@@ -1,16 +1,16 @@
 {% extends 'dopamine/base.html' %}
 {% load static %}
-{% block content_checkout %}
+{% block content %}
 <link href="{% static 'dopamine/css/checkout.css' %}" rel="stylesheet"/> 
 
-<div class="container mt-4">
+<div class="container mt-5 pt-3">
   <div class="row">
     
     <!-- THÔNG TIN NGƯỜI DÙNG -->
     <div class="col-md-6">
       <div class="box-element">
         <h4 class="mb-3">Thông tin người đặt</h4>
-        <form method="POST" action="{% url 'process_order' %}">
+        <form method="POST" action="{% url 'checkout' %}">
           {% csrf_token %}
           <div class="form-group mb-2">
             <label>Họ và Tên</label>
@@ -29,10 +29,6 @@
           <div class="form-group mb-2">
 			<label>Tỉnh/Thành phố</label>
             <input class="form-control" type="text" name="address" placeholder=" ">
-          </div>
-          <div class="form-group mb-2">
-			<label>Quận/Huyện</label>
-            <input class="form-control" type="text" name="city" placeholder=" ">
           </div>
           <div class="form-group mb-2">
 			<label>Phường/Xã</label>
@@ -60,18 +56,20 @@
       </div>
     </div>
 
-    <!-- TÓM TẮT ĐƠN HÀNG -->
+   <!-- TÓM TẮT ĐƠN HÀNG -->
     <div class="col-md-6">
       <div class="box-element">
         <h4>Tóm tắt đơn hàng</h4>
         <hr>
         {% for item in items %}
-        <div class="cart-row mb-2 d-flex align-items-center">
-          <div style="flex:2"><img class="row-image" src="{{ item.product.ImageProduct }}"></div>
-          <div style="flex:3">{{ item.product.name }}</div>
-          <div style="flex:1">{{ item.product.price }}đ</div>
-          <div style="flex:1">x {{ item.quantity }}</div>
-        </div>
+          {% if item.product %}
+            <div class="cart-row mb-2 d-flex align-items-center">
+              <div style="flex:2"><img class="row-image" src="{{ item.product.ImageProduct }}"></div>
+              <div style="flex:3">{{ item.product.name }}</div>
+              <div style="flex:1">{{ item.product.price }}đ</div>
+              <div style="flex:1">x {{ item.quantity }}</div>
+            </div>
+          {% endif %}
         {% endfor %}
         <hr>
         <h5>Tổng số lượng: {{ order.get_cart_items }}</h5>
@@ -82,4 +80,4 @@
 
   </div>
 </div>
-{% endblock %}
+{% endblock content %}

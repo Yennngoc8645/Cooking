@@ -12,6 +12,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
         {% block extra_css %}
           <link rel="stylesheet" href="{% static 'dopamine/css/detail.css' %}">
+          <link rel="stylesheet" href="{% static 'dopamine/css/base.css' %}">
         {% endblock %}
 
         <!--js-->
@@ -50,6 +51,7 @@
         <link rel="stylesheet" href="">
     </head>
     <body>
+      
         {% block banner_slider %}{% endblock banner_slider %}
 
         <!-- Thanh menu -->
@@ -66,17 +68,38 @@
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Trang chủ</a>
                   </li>
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Menu
-                    </a>                                
-                    <ul class="dropdown-menu">
-                    {%for i in categories%}
-                      <li><a class="dropdown-item" href="{%url 'category'%}?category={{i.slug}}">{{i.name}}</a></li>
-                    {%endfor%}
-                    </ul>
-                  </li>
-                
+                <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                          Danh mục
+                        </a>
+                        <ul class="dropdown-menu">
+                          {% for cat in categories %}
+                            {% if cat.children.all %}
+                              <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" href="{% url 'category' %}?category={{ cat.slug }}">
+                                  {{ cat.name }}
+                                </a>
+                                <ul class="dropdown-menu">
+                                  {% for child in cat.children.all %}
+                                    <li>
+                                      <a class="dropdown-item" href="{% url 'category' %}?category={{ child.slug }}">
+                                        {{ child.name }}
+                                      </a>
+                                    </li>
+                                  {% endfor %}
+                                </ul>
+                              </li>
+                            {% else %}
+                              <li>
+                                <a class="dropdown-item" href="{% url 'category' %}?category={{ cat.slug }}">
+                                  {{ cat.name }}
+                                </a>
+                              </li>
+                            {% endif %}
+                          {% endfor %}
+                        </ul>
+                      </li>
+              
                       <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                           Công thức
@@ -94,42 +117,119 @@
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#">Liên hệ</a>
-                  </li>
-                  
+                  </li>                 
                 </ul>
-                <form class="d-flex" role="search" method = POST action = "{%url 'search'%}">
-                  {% csrf_token %}
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name = "searched">
-                  <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-
-                  <div class="form-inline my-2 my-lg-0" style = "visibility: {{user_login}}">
-                    <span> hello! {{request.user}} </span>
-                    <span><a href= {% url 'logout' %}> Logout</a></span>
+                  <div class="search-wrapper me-4" style="position: relative; max-width: 300px; width: 100%;">
+                    <form method="GET" action="{% url 'search' %}" class="custom-search-form" autocomplete="off">
+                      <input
+                        type="text"
+                        name="q"
+                        id="search-input"
+                        class="custom-search-input"
+                        placeholder="Search..."
+                        data-url="{% url 'autocomplete_products' %}"
+                      >
+                      <button type="submit" class="custom-search-button">
+                        <i class="bi bi-search"></i>
+                      </button>
+                      <!-- Gợi ý kết quả -->
+                      <ul id="suggestions" class="autocomplete-suggestions"></ul>
+                    </form>
                   </div>
 
-                  <div class="form-inline my-2 my-lg-0" style = "visibility: {{user_not_login}}">
-                    <a class="nav-link" href={% url 'login'%}>Đăng nhập</a>
-                    <a class="nav-link" href={% url 'register'%}>Đăng ký</a>
-                  </div>
+                                  <!-- Icon người dùng + Dropdown -->
+                  <li class="nav-item dropdown d-flex align-items-center ms-3 me-4">
+                    <a class="nav-link dropdown-toggle p-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <img src="{% static 'dopamine/images/chef.png' %}" width="36" height="36" class="rounded-circle" style="object-fit: cover;">
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end mt-2 shadow-sm" style="min-width: 240px; white-space: nowrap;">
+                      <li class="px-3 py-2">
+                        👋 Xin chào, <strong>{{ request.user.username }}</strong>
+                      </li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="{% url 'logout' %}">📦 Đăng xuất</a></li>
+                    </ul>
+                  </li>
 
                 <div class="form-inline my-2 my-lg-0">
-
-                  <a href="{% url 'cart' %}"><img id="cart-icon" src="{% static 'dopamine/images/shopp.png'%}"></a>
+                  <a href="{% url 'cart' %}">
+                    <img id="cart-icon" src="{% static 'dopamine/images/shopp.png' %}" alt="Giỏ hàng">
+                  </a>
                   <p id='cart-total' >{{cartItems}}</p>
               </div>
-            </div>
+            </div>                  
         </nav>
-        {% block content %}{% endblock %}
+        
         <!-- Main body -->
         <script src="" async defer></script>
-        {% block main-content %}{% endblock main-content %}
-        {% block cart_content %}{% endblock cart_content %}
-        {% block content_checkout %}{% endblock content_checkout %}
-        {% block register %}{% endblock register %}
+        <main class="flex-grow-1">
+          {% block content %}{% endblock %}
+        </main>
+<footer class="footer-clean text-white mt-5">
+  <div class="container py-4">
+    <div class="row">
+      <!-- Cột 1: Logo + thông tin -->
+      <div class="col-md-4 mb-3">
+        <div class="d-flex align-items-center mb-2">
+          <img src="{% static 'dopamine/images/vegetable-shop.png' %}" alt="Dopamine" style="height: 24px; margin-right: 10px;">
+          <h5 class="fw-bold mb-0">DopamineFoods</h5>
+        </div>
+        <p class="mb-1">Email: <a href="mailto:vege@dopamine.com" class="text-white">vege@dopamine.com</a></p>
+        <p class="mb-1">Fanpage: <a href="#" target="_blank" class="text-white">DoDoFoods</a></p>
+        <img src="{% static 'dopamine/images/vegestable.png' %}" alt="Fruits" style="width: 100px;">
+      </div>
 
-        <!-- Footer -->
-        <footer></footer>
-        <script src="{% static 'dopamine/js/cart.js' %}"></script>
+      <!-- Cột 2: Hotline -->
+      <div class="col-md-4 mb-3">
+        <h5 class="fw-bold mb-2">Hotline liên hệ: </h5>
+        <p class="mb-1">
+          <img src="{% static 'dopamine/images/phone.png' %}" alt="hotline" style="height: 20px; margin-right: 6px;" class="d-inline-block align-middle">
+          <span class="align-middle">090 108 8645</span>
+        </p>
+        <p class="mb-1"><small>Tất cả các ngày trong tuần</small></p>
+        <img src="{% static 'dopamine/images/bct.webp' %}" alt="Bộ Công Thương" style="height: 40px;">
+      </div>
+
+            <!-- Cột 3: Quy trình -->
+<div class="col-md-4 mb-3">
+  <h5 class="fw-bold mb-3 text-center">Quy trình mua hàng</h5>
+
+  <div class="d-flex justify-content-between flex-wrap text-center">
+    <div class="text-center mx-2 my-2" style="width:80px;">
+      <img src="{% static 'dopamine/images/checkout.png' %}" class="icon-mini mb-1" alt="Giỏ hàng">
+      <p class="mb-0 small">Giỏ hàng</p>
+    </div>
+    <div class="text-center mx-2 my-2" style="width:80px;">
+      <img src="{% static 'dopamine/images/list.png' %}" class="icon-mini mb-1" alt="Đặt hàng">
+      <p class="mb-0 small">Đặt hàng</p>
+    </div>
+    <div class="text-center mx-2 my-2" style="width:80px;">
+      <img src="{% static 'dopamine/images/pay.png' %}" class="icon-mini mb-1" alt="Thanh toán">
+      <p class="mb-0 small">Thanh toán</p>
+    </div>
+    <div class="text-center mx-2 my-2" style="width:80px;">
+      <img src="{% static 'dopamine/images/done.png' %}" class="icon-mini mb-1" alt="Xác nhận">
+      <p class="mb-0 small">Xác nhận</p>
+    </div>
+    <div class="text-center mx-2 my-2" style="width:80px;">
+      <img src="{% static 'dopamine/images/delivery.png' %}" class="icon-mini mb-1" alt="Giao hàng">
+      <p class="mb-0 small">Giao hàng</p>
+    </div>
+    <div class="text-center mx-2 my-2" style="width:80px;">
+      <img src="{% static 'dopamine/images/handshake.png' %}" class="icon-mini mb-1" alt="Hoàn thành">
+      <p class="mb-0 small">Hoàn thành</p>
+    </div>
+  </div>
+</div>
+
+    <hr class="border-light mt-4">
+    <p class="text-center small mb-0">© 2024 Dopamine. All rights reserved.</p>
+  </div>
+</footer>
+
+
+       <script src="{% static 'dopamine/js/cart.js' %}"></script>
+       <script src="{% static 'dopamine/js/autocomplete.js' %}"></script>
     </body>
-</html>
+</html> 

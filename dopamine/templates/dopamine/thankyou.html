@@ -7,12 +7,12 @@
 
     <hr class="my-5">
 
-    <h4 class="mb-4">✨ Sản phẩm bạn có thể thích:</h4>
+    <h4 class="mb-4">✨ Sản phẩm bạn có thể thích </h4>
     <div class="row justify-content-center">
         {% for product in suggested_products %}
         <div class="col-md-3 mb-4">
             <div class="card h-100 shadow">
-                <img src="{{ product.ImageProduct.url }}" class="card-img-top" alt="{{ product.name }}">
+                <img src="{{ product.ImageProduct }}" class="card-img-top" alt="{{ product.name }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ product.name }}</h5>
                     <p class="card-text text-danger">{{ product.price }} VNĐ</p>

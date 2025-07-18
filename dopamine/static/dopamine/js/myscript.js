@@ -104,3 +104,4 @@ $('.minus-wishlist').click(function(){
         }
     })
 })
+

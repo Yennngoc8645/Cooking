@@ -3,9 +3,12 @@
 /* Tổng thể */
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #defee7;
+    background-color: #d9ffd6;
     color: #333;
     line-height: 1.6;
+    background: url('/static/dopamine/images/raucu.png') no-repeat center center fixed;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 /* Container */
@@ -25,8 +28,8 @@ body {
 }
 
 .btn-outline-dark {
-    color: #333;
-    border: 2px solid #333;
+    color: #ffffff;
+    border: 2px solid #ffffff;
     background-color: transparent;
 }
 
@@ -36,12 +39,12 @@ body {
 }
 
 .btn-success {
-    background-color: #19a478;
-    border: 2px solid #333;
+    background-color: #218838;
+    border: 2px solid #17941f;
 }
 
 .btn-success:hover {
-    background-color: #218838;
+    background-color: #79c175;
 }
 
 /* Table */
@@ -53,11 +56,11 @@ body {
 
 .table th, .table td {
     padding: 15px;
-    text-align: left;
+    text-align: center;
 }
 
 .table th {
-    background-color: #defee7;
+    background-color: #50b654;
     font-weight: bold;
 }
 
@@ -69,27 +72,157 @@ body {
 .cart-row {
     display: flex;
     align-items: center;
-    margin: 15px 0;
+    justify-content: space-between;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.cart-row input[type="number"] {
+    width: 60px;
+    padding: 6px;
+    text-align: center;
+    border-radius: 4px;
+    border: 1px solid #ccc;
 }
 
 .row-image {
-    width: 100px;
+    width: 80px;
     height: 80px;
     object-fit: cover;
-    border-radius: 5px;
-    margin-right: 15px;
-}
-
-.chg-quantity {
-    width: 10px;
-    height: 10px;
-    cursor: pointer;
-    margin: 5px;
-    transition: transform 0.2s;
+    border-radius: 10px;
+    border: 1px solid #eee;
 }
 
 .chg-quantity:hover {
     transform: scale(1.1);
+}
+.checkout-btn {
+    background-color: #90CF8E;
+    color: white;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    transition: background 0.3s ease;
+}
+
+.checkout-btn:hover {
+    background-color: #bdffba;
+}
+.cart-wrapper {
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 20px;
+  border-radius: 12px;
+
+  /* Hiệu ứng mờ nền cho tất cả trình duyệt */
+  backdrop-filter: blur(6px);              /* chuẩn */
+  -webkit-backdrop-filter: blur(6px);      /* dành cho Safari */
+}
+
+.cart-left {
+  flex: 2;
+  margin-right: 10px;
+}
+
+.cart-right {
+  flex: 1;
+  background-color: #eaf8f0;
+  padding: 30px;
+  border-radius: 10px;
+  height: fit-content;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.cart-img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+/* Đảm bảo ô chứa nút căn giữa theo chiều cao */
+.quantity-cell {
+    vertical-align: middle;
+    height: 100%;
+}
+.quantity-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 100%;
+}
+
+.chg-quantity {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #ddd;
+    border: none;
+    font-weight: bold;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.chg-quantity:hover {
+    background-color: #bbb;
+}
+
+.qty {
+  font-weight: bold;
+  font-size: 16px;
+  width: 24px;
+  text-align: center;
+}
+
+.summary-box {
+  text-align: center;
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 10px;
+}
+
+.summary-box h4 {
+  margin-bottom: 20px;
+}.cart-summary-box {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 360px;
+  margin: auto;
+}
+
+.cart-summary-box h4 {
+  font-weight: 600;
+  color: #3d9970;
+}
+
+.cart-summary-box p {
+  font-size: 16px;
+  margin: 0;
+}
+
+.cart-summary-box a.btn {
+  font-size: 16px;
+  padding: 10px 0;
+  border-radius: 8px;
+}
+
+.btn-block {
+  width: 100%;
+  margin-top: 20px;
+  font-size: 18px;
+}
+.alert-info {
+  background-color: #f0fff4;
+  border: 1px solid #b2f5ea;
+  color: #2f855a;
+  font-size: 18px;
 }
 
   

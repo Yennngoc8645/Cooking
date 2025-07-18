@@ -1,5 +1,6 @@
 {% extends "dopamine/base.html" %}
 {% load static %}
+{% load humanize %}
 {% block banner_slider %}
 <link href="{% static 'dopamine/css/home.css' %}" rel="stylesheet"/>
 
@@ -9,7 +10,7 @@
       <img src="{% static 'dopamine/images/banner/banner1.png' %}" class="d-block w-100 custom-carousel-img" alt="...">
     </div>
     <div class="carousel-item">
-      <img src="{% static 'dopamine/images/banner/banner2.png' %}" class="d-block w-100 custom-carousel-img" alt="...">
+      <img src="{% static 'dopamine/images/banner/banner7.png' %}" class="d-block w-100 custom-carousel-img" alt="...">
     </div>
     <div class="carousel-item">
       <img src="{% static 'dopamine/images/banner/banner3.png' %}" class="d-block w-100 custom-carousel-img" alt="...">
@@ -25,28 +26,37 @@
   </button>
 </div>
 {% endblock banner_slider %}
-{% block main-content %}
-<div class="row" style="width:100%">
-  {% for product in products %}
-  <div class="col-lg-2">
-    <div class="box-element">
-      <div class="product-image">
-        <img class="thumbnail" src="{{ product.ImageProduct }}" alt="{{ product.name }}">
-         <div class="button-container">
-          <a href="#" data-product="{{ product.id }}" data-action="add" class="add-to-cart">
-            <img src="{% static 'dopamine/images/shoppingcart.png' %}" alt="Thêm vào giỏ hàng">
-          </a>     
+{% block content %}
+<div class="container mt-3">
+  <div class="row">
+    {% for product in products %}
+     <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+        <div class="box-element">
 
-          <a href="{% url 'detail' product.id %}"><img src="{% static 'dopamine/images/search.png' %}" alt="Xem chi tiết"></a>
+          <!-- Hình ảnh + hiệu ứng nút -->
+        <div class="product-image">
+          <img class="thumbnail" src="{{ product.ImageProduct }}" alt="{{ product.name }}">
+          <div class="button-container mt-2">
+            <a href="#" data-product="{{ product.id }}" data-action="add" class="add-to-cart">
+              <img src="{% static 'dopamine/images/shoppingcart.png' %}" alt="Thêm vào giỏ hàng">
+            </a>     
+            <a href="{% url 'detail' product.id %}">
+              <img src="{% static 'dopamine/images/search.png' %}" alt="Xem chi tiết">
+            </a>
+          </div>
+        </div>
+          <!-- Tên + giá -->
+       <div class="product-details-footer">
+          <p class="product-name">{{ product.name }}</p>
+          <p class="product-price">
+            {{ product.price|floatformat:"g"|intcomma }} đ/{{ product.unit|capfirst }}
+          </p>
+       </div>
+       
         </div>
       </div>
-      <div class="product-details">
-        <h5 class="product-name">{{product.name}}</h5>
-        <h5 class="product-price">{{product.price|floatformat:3}}đ</h5>
-      </div>
-    </div>
-  </div>  
-    {% endfor %}  
+    {% endfor %}
   </div>
-{% endblock main-content %}
+</div>
+{% endblock content %}
 
